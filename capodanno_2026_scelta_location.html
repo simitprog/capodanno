@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capodanno - Scelta Location</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-full flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Capodanno Locations</h1>
+                    <p class="text-xs text-slate-400">Confronto e divisione spese</p>
+                </div>
+            </div>
+
+            <!-- Global Configuration Bar -->
+            <div class="flex items-center gap-3 bg-slate-950/60 border border-slate-800 px-4 py-2 rounded-2xl shadow-inner">
+                <label for="numPersone" class="text-sm font-medium text-slate-300 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    Partecipanti:
+                </label>
+                <input type="number" id="numPersone" min="1" max="100" value="10" 
+                    class="w-16 bg-slate-800 border border-slate-700 text-center font-bold text-white text-base rounded-xl focus:outline-none focus:border-indigo-500 transition-all py-1">
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+        <div class="mb-8">
+            <h2 class="text-2xl font-extrabold text-white">Location Selezionate</h2>
+            <p class="text-sm text-slate-400 mt-1">I prezzi a persona si aggiornano in automatico variando il numero dei partecipanti sopra.</p>
+        </div>
+
+        <!-- Cards Grid Container -->
+        <div id="locationsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated dynamically via JavaScript -->
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800/80 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>GitHub Pages Ready &bull; Modifica il file per aggiungere nuove location</span>
+            </div>
+            <button onclick="toggleGuide()" class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors underline underline-offset-4">
+                Come aggiungere nuove location?
+            </button>
+        </div>
+    </footer>
+
+    <!-- Guide Modal -->
+    <div id="guideModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-white">Guida per lo Sviluppatore</h3>
+                <button onclick="toggleGuide()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <p class="text-sm text-slate-300 mb-4">
+                Per aggiungere o modificare le location, apri il file <code class="text-indigo-400 bg-slate-950 px-1.5 py-0.5 rounded">index.html</code> nel tuo editor di codice e cerca l'array JavaScript <code class="text-indigo-400 bg-slate-950 px-1.5 py-0.5 rounded">locationsData</code>.
+            </p>
+            <pre class="bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 overflow-x-auto mb-4 font-mono"><code>{
+                title: "Nome Location",
+                url: "https://link-annuncio.com",
+                price: 450,
+                image: "https://images.unsplash.com/...", // opzionale
+                badge: "Piscina / Vista"
+            }</code></pre>
+            <p class="text-xs text-slate-400 mb-6">
+                Salva il file, esegui il commit e fai il <code class="text-indigo-400 font-mono">git push</code> su GitHub. Il sito si aggiornerà in pochi secondi!
+            </p>
+            <button onclick="toggleGuide()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl transition-all">
+                Ho capito
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // STRUTTURA DATI DELLE LOCATION (Modifica qui per aggiungere o cambiare link e prezzi)
+        const locationsData = [
+            {
+                title: " ",
+                url: "https://www.casevacanza.it/rental/f77d5e40ba7fea53?clickId=DP37SC2ZPGDKMTC8&adults=4&children=4&childrenAges[]=17&childrenAges[]=17&childrenAges[]=17&childrenAges[]=16&arrival=2026-12-31&duration=3&location=5460aeae078f7&maxPricePerNight=170EUR&pricetype=totalPrice&bounds=48.89086%2C8.0388%3B43.01765%2C12.34544&asat=2&initialArrival=2026-12-31&initialDuration=2&persons=8&id=f77d5e40ba7fea53&dp=0&sT=withDates&pCon=230%7CEUR%7C2026-12-31%7C3%7C8%7C1790718041%7C0%7C0%7C1790651947%7C4%7C4%7C0%7C95%7C75%7C0%7Ccase_vacanza_it_wl%7Cfull%7C0%7Crefund&prodName=JM&prodSource=Search&searchId=beaa3eec7e52405a&screen=search&priceRate=refund",
+                price: 230,
+                image: "https://cdn.hometogo.net/large/v1/3f7/9de/1e92cbced860545c5e54f631d7.jpg",
+            },
+            {
+                title: " ",
+                url: "https://www.casevacanza.it/rental/668326d79ed99008?duration=3&asat=2&location=5460aeae078f7&arrival=2026-12-31&initialArrival=2026-12-31&initialDuration=2&persons=8&adults=4&children=4&childrenAges[]=17&childrenAges[]=17&childrenAges[]=17&childrenAges[]=16&bounds=48.89086%2C8.0388%3B43.01765%2C12.34544&id=668326d79ed99008&maxPricePerNight=170EUR&pricetype=totalPrice&dp=0&clickId=HPFQHHQQHMR0XY1J&sT=withDates&pCon=190%7CEUR%7C2026-12-31%7C3%7C8%7C1790718180%7C0%7C0%7C1790650950%7C4%7C4%7C0%7C95%7C150%7C0%7Ccase_vacanza_it_wl%7Cfull%7C0%7Crefund&prodName=JM&prodSource=Search&searchId=beaa3eec7e52405a&screen=search&priceRate=refund",
+                price: 190,
+                image: "https://cdn.hometogo.net/large/v1/e1c/cf3/2329220dc2a21b2febe781a647.jpg"
+            }
+        ];
+
+        // Riferimenti DOM
+        const gridEl = document.getElementById('locationsGrid');
+        const numPersoneInput = document.getElementById('numPersone');
+        const guideModal = document.getElementById('guideModal');
+
+        // Carica numero persone salvato in precedenza se presente
+        const savedPersone = localStorage.getItem('capodanno_persone');
+        if (savedPersone) {
+            numPersoneInput.value = savedPersone;
+        }
+
+        // Funzione di rendering principale delle card
+        function renderLocations() {
+            const numPersone = Math.max(1, parseInt(numPersoneInput.value) || 1);
+            
+            // Salva nel localStorage locale
+            localStorage.setItem('capodanno_persone', numPersone);
+
+            // Trova il prezzo a persona minimo per evidenziare la migliore offerta
+            let minPricePerPerson = Infinity;
+            locationsData.forEach(loc => {
+                const p = loc.price / numPersone;
+                if (p < minPricePerPerson) minPricePerPerson = p;
+            });
+
+            gridEl.innerHTML = '';
+
+            locationsData.forEach(loc => {
+                const prezzoPersona = Math.round((loc.price / numPersone) * 100) / 100;
+                const isBestValue = prezzoPersona === minPricePerPerson;
+
+                const card = document.createElement('div');
+                card.className = `group bg-slate-900 border ${isBestValue ? 'border-indigo-500/80 shadow-lg shadow-indigo-500/10' : 'border-slate-800'} rounded-3xl overflow-hidden flex flex-col transition-all duration-300 hover:border-slate-700 hover:translate-y-[-2px]`;
+
+                card.innerHTML = `
+                    <div class="relative h-44 overflow-hidden bg-slate-950">
+                        <img src="${loc.image}" alt="${loc.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" onerror="this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Capodanno'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                        ${loc.badge ? `<span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-xs font-semibold px-3 py-1 rounded-full border border-slate-700/50 text-indigo-300">${loc.badge}</span>` : ''}
+                        ${isBestValue ? `<span class="absolute top-3 right-3 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">✨ Miglior Prezzo</span>` : ''}
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow justify-between gap-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-white group-hover:text-indigo-400 transition-colors line-clamp-1">${loc.title}</h3>
+                            <a href="${loc.url}" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-400 hover:text-indigo-300 inline-flex items-center gap-1 mt-1 font-medium">
+                                Apri link annuncio
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Totale affitto</span>
+                                <span class="text-lg font-extrabold text-white">${loc.price} €</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs text-indigo-400 font-semibold block">A persona</span>
+                                <span class="text-xl font-black text-indigo-300">${prezzoPersona.toFixed(2)} €</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                gridEl.appendChild(card);
+            });
+        }
+
+        function toggleGuide() {
+            guideModal.classList.toggle('hidden');
+        }
+
+        // Event listener sul cambio input numero persone
+        numPersoneInput.addEventListener('input', renderLocations);
+
+        // Avvio iniziale al caricamento
+        window.onload = function() {
+            renderLocations();
+        };
+    </script>
+</body>
+</html>
